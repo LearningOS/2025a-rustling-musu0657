@@ -7,12 +7,14 @@
 
 // I AM NOT DONE
 
+#[derive(Debug)]
 struct ColorClassicStruct {
     red_component: u8,
     green: u8,
     blue: u8,
 }
 
+#[derive(Debug)]
 struct ColorTupleStruct(u8, u8, u8);
 
 #[derive(Debug)]
