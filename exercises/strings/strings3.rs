@@ -3,7 +3,7 @@
 // Execute `rustlings hint strings3` or use the `hint` watch subcommand for a
 // hint.
 
-// I AM NOT DONE
+
 
 fn trim_me(input: &str) -> String {
    
@@ -11,7 +11,6 @@ fn trim_me(input: &str) -> String {
 }
 
 fn compose_me(input: &str) -> String {
-    // TODO: Add " world!" to the string! There's multiple ways to do this!
     format!("{} world!", input)
 }
 

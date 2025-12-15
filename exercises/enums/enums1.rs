@@ -15,6 +15,6 @@ enum Message {
 fn main() {
     println!("{:?}", Message::Quit);
     println!("{:?}", Message::Echo);
-    println!("{:?}", Message::Move);
-    println!("{:?}", Message::ChangeColor);
+    println!("{:?}", Message::Move { x: 1, y: 2 });
+    println!("{:?}", Message::ChangeColor(1, 2, 3));
 }

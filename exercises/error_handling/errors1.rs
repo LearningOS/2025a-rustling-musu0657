@@ -14,7 +14,7 @@
 pub fn generate_nametag_text(name: &str) -> Result<String, String> {
     if name.is_empty() {
         
-        Err("`name` was empty; it must be nonempty.".into())
+        Err("`name` was empty; it must be nonempty.".to_string())
     } else {
         Ok(format!("Hi! My name is {}", name))
     }
@@ -28,7 +28,7 @@ mod tests {
     fn generates_nametag_text_for_a_nonempty_name() {
         assert_eq!(
             generate_nametag_text("Beyoncé"),
-            Ok("Hi! My name is Beyoncé")
+            Ok("Hi! My name is Beyoncé".to_string())
         );
     }
 
