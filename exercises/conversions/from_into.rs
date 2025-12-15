@@ -7,7 +7,7 @@
 // Execute `rustlings hint from_into` or use the `hint` watch subcommand for a
 // hint.
 
-#[derive(Debug)]
+#[derive(Debug, PartialEq)]
 struct Person {
     name: String,
     age: usize,
@@ -44,6 +44,26 @@ impl Default for Person {
 
 impl From<&str> for Person {
     fn from(s: &str) -> Person {
+        if s.is_empty() {
+            return Person::default();
+        }
+        let parts: Vec<&str> = s.split(',').collect();
+        if parts.len() != 2 {
+            return Person::default();
+        }
+        let name = parts[0];
+        let age_str = parts[1];
+        if name.is_empty() {
+            return Person::default();
+        }
+        let age: usize = match age_str.parse() {
+            Ok(num) => num,
+            Err(_) => return Person::default(),
+        };
+        Person {
+            name: name.to_string(),
+            age,
+        }
     }
 }
 
