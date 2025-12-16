@@ -38,6 +38,8 @@ where
 
     pub fn add(&mut self, value: T) {
         self.items.push(value);
+        self.count += 1;
+        self.heapify_up(self.count);
     }
 
     fn parent_idx(&self, idx: usize) -> usize {
@@ -70,7 +72,30 @@ where
         } else {
             left_idx
         }
-		0
+    }
+
+    fn heapify_up(&mut self, mut idx: usize) {
+        while idx > 1 {
+            let parent_idx = self.parent_idx(idx);
+            if (self.comparator)(&self.items[idx], &self.items[parent_idx]) {
+                self.items.swap(idx, parent_idx);
+                idx = parent_idx;
+            } else {
+                break;
+            }
+        }
+    }
+
+    fn heapify_down(&mut self, mut idx: usize) {
+        while self.children_present(idx) {
+            let smallest_idx = self.smallest_child_idx(idx);
+            if (self.comparator)(&self.items[smallest_idx], &self.items[idx]) {
+                self.items.swap(idx, smallest_idx);
+                idx = smallest_idx;
+            } else {
+                break;
+            }
+        }
     }
 }
 
@@ -96,11 +121,13 @@ where
     type Item = T;
 
     fn next(&mut self) -> Option<T> {
-        if !self.is_empty() {
-            self.count -= 1;
-            self.items.pop()
-        } else {
+        if self.is_empty() {
             None
+        } else {
+            self.items.swap(1, self.count);
+            self.count -= 1;
+            self.heapify_down(1);
+            self.items.pop()
         }
     }
 }

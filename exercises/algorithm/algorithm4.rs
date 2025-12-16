@@ -50,13 +50,23 @@ where
 
     // Insert a value into the BST
     fn insert(&mut self, value: T) {
-        //TODO
+        match self.root.take() {
+            Some(mut node) => {
+                node.insert(value);
+                self.root = Some(node);
+            }
+            None => {
+                self.root = Some(Box::new(TreeNode::new(value)));
+            }
+        }
     }
 
     // Search for a value in the BST
     fn search(&self, value: T) -> bool {
-        //TODO
-        true
+        match &self.root {
+            Some(node) => node.search(&value),
+            None => false,
+        }
     }
 }
 
@@ -66,7 +76,51 @@ where
 {
     // Insert a node into the tree
     fn insert(&mut self, value: T) {
-        //TODO
+        match value.cmp(&self.value) {
+            Ordering::Less => {
+                match self.left.take() {
+                    Some(mut node) => {
+                        node.insert(value);
+                        self.left = Some(node);
+                    }
+                    None => {
+                        self.left = Some(Box::new(TreeNode::new(value)));
+                    }
+                }
+            }
+            Ordering::Greater => {
+                match self.right.take() {
+                    Some(mut node) => {
+                        node.insert(value);
+                        self.right = Some(node);
+                    }
+                    None => {
+                        self.right = Some(Box::new(TreeNode::new(value)));
+                    }
+                }
+            }
+            Ordering::Equal => {
+                // Duplicate values are ignored
+            }
+        }
+    }
+
+    fn search(&self, value: &T) -> bool {
+        match value.cmp(&self.value) {
+            Ordering::Equal => true,
+            Ordering::Less => {
+                match &self.left {
+                    Some(node) => node.search(value),
+                    None => false,
+                }
+            }
+            Ordering::Greater => {
+                match &self.right {
+                    Some(node) => node.search(value),
+                    None => false,
+                }
+            }
+        }
     }
 }
 
@@ -121,6 +175,4 @@ mod tests {
             None => panic!("Root should not be None after insertion"),
         }
     }
-}    
-
-
+}
